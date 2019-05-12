@@ -1,18 +1,9 @@
 package ru.geekbrains.lesson1.homework1.Fruits;
 
 public abstract class Fruit {
-    Float weight;
-    Integer cnt;
 
-    public Float getWeightFruits() {
-        return weight;
-    }
+    public abstract Float getWeightFruits();
 
-    public Integer getCntFruits() {
-        return cnt;
-    }
+    public abstract Integer getCntFruits();
 
-    public void setCntFruits(Integer cnt) {
-        this.cnt = cnt;
-    }
 }

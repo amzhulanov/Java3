@@ -14,8 +14,4 @@ public class Orange extends Fruit {
         return orangeCnt;
     }
 
-    @Override
-    public void setCntFruits(Integer cnt) {
-        orangeCnt=cnt;
-    }
 }

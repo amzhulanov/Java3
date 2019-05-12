@@ -14,8 +14,4 @@ public class Apple extends Fruit {
         return appleCnt;
     }
 
-    @Override
-    public void setCntFruits(Integer cnt) {
-        appleCnt=cnt;
-    }
 }
