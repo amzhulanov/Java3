@@ -59,6 +59,7 @@ public class WildcardAndPecs {
         numList.add(1L);
         numList.add(5.5);
         numList.add(99.99f);
+        System.out.println(numList.get(1));
     }
 
     // List<?> == List<? extends Object>
