@@ -15,8 +15,7 @@ public class TestRunnerHW7 {
         //заполняю Мапу методами класса TestClass
         for (Method method : className.getDeclaredMethods()) {
 
-            //    if (method.getAnnotation(BeforeSuite.class) != null) {
-            if (method.getName() == "methodBefore") {//
+            if (method.getAnnotation(BeforeSuite.class) != null) {
                 if (map.get(MIN_PRIORITY - 1) != null) {
                     throw new RuntimeException();//BeforeSuit должен быть один
                 } else {//если уже есть метод с таким приоритетом, добавляю в List метод
@@ -25,8 +24,7 @@ public class TestRunnerHW7 {
                     map.put(MIN_PRIORITY - 1, list);
                 }
             }
-            //if (method.getAnnotation(AfterSuite.class) != null) {
-            if (method.getName() == "methodAfter") {
+            if (method.getAnnotation(AfterSuite.class) != null) {
                 if (map.get(MAX_PRIORITY + 1) != null) {
                     throw new RuntimeException();//AfterSuit должен быть один
                 } else {
