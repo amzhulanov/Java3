@@ -27,7 +27,7 @@ public class TestRunnerHW7 {
             }
             //if (method.getAnnotation(AfterSuite.class) != null) {
             if (method.getName()=="methodAfter"){
-                if (map.get(MAX_PRIORITY - 1) != null) {
+                if (map.get(MAX_PRIORITY + 1) != null) {
                     throw new RuntimeException();//AfterSuit должен быть один
                 } else {
                     List<Method> list = new ArrayList<>();
@@ -42,7 +42,7 @@ public class TestRunnerHW7 {
                 } else {
                     List<Method> list = new ArrayList<>();
                     list.add(method);
-                    map.put(test.priority() - 1, list);
+                    map.put(test.priority(), list);
                 }
             }
         }
