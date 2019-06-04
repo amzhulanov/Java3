@@ -15,8 +15,8 @@ public class TestRunnerHW7 {
         //заполняю Мапу методами класса TestClass
         for (Method method : className.getDeclaredMethods()) {
 
-        //    if (method.getAnnotation(BeforeSuite.class) != null) {
-            if (method.getName()=="methodBefore"){//
+            //    if (method.getAnnotation(BeforeSuite.class) != null) {
+            if (method.getName() == "methodBefore") {//
                 if (map.get(MIN_PRIORITY - 1) != null) {
                     throw new RuntimeException();//BeforeSuit должен быть один
                 } else {//если уже есть метод с таким приоритетом, добавляю в List метод
@@ -26,7 +26,7 @@ public class TestRunnerHW7 {
                 }
             }
             //if (method.getAnnotation(AfterSuite.class) != null) {
-            if (method.getName()=="methodAfter"){
+            if (method.getName() == "methodAfter") {
                 if (map.get(MAX_PRIORITY + 1) != null) {
                     throw new RuntimeException();//AfterSuit должен быть один
                 } else {
@@ -59,18 +59,10 @@ public class TestRunnerHW7 {
             Object testClass = new TestClass();
             List<Method> list = new ArrayList<>();
             for (Integer key : map.keySet()) {
-                //   map.get(key).invoke(testClass);
-                //System.out.println(map.get(key).size());
-                //int ln=map.get(key).size();
-
-                list=map.get(key);
-                for (Method nextItem :list){
+                list = map.get(key);
+                for (Method nextItem : list) {
                     nextItem.invoke(testClass);
                 }
-                /*for (Method nt : map.get(key)) {
-
-                    nt.invoke(testClass);
-                }*/
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
