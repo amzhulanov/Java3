@@ -1,4 +1,4 @@
-package ru.geekbrains.lesson6;
+package geekbrains.lesson6;
 
 public class Calculator {
     public int add(int a, int b) {

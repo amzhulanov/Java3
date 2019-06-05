@@ -37,7 +37,7 @@ public class ReflectionDemo {
         System.out.println(clazz.getName());
 
         try {
-            clazz = Class.forName("ru.geekbrains.lesson7.ReflectionDemo");
+            clazz = Class.forName("geekbrains.lesson7.ReflectionDemo");
             System.out.println(clazz.getName());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -70,8 +70,7 @@ public class ReflectionDemo {
         System.out.println(isBoolValueMethod.invoke(someClass));
 
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/network_chat",
-                    "root", "root");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/network_chat?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Novosibirsk", "root", "localhost_1");
             Repository<User> userRepository = new Repository<>(conn, User.class);
             System.out.println(userRepository.buildCreateTableStatement());
         } catch (SQLException e) {
