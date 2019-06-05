@@ -9,62 +9,60 @@ public class TestRunnerHW7 {
     public static void start(Class<?> className) {
         final int MIN_PRIORITY = 1;
         final int MAX_PRIORITY = 10;
+        Method beforeSuit=null;
+        Method afterSuite=null;
         //Создаю Map`у для методов с приоритетами для сортировки по приоритету
-        Map<Integer, List<Method>> map = new HashMap<>();  //использую List для случаев, если у методов один приоритет
+        //Map<Integer, List<Method>> map = new HashMap<>();  //использую List для случаев, если у методов один приоритет
+        List<Method> map=new ArrayList<>();
 
         //заполняю Мапу методами класса TestClass
-        for (Method method : className.getDeclaredMethods()) {
+        for (Method method : className.getMethods()) {
 
-            if (method.getAnnotation(BeforeSuite.class) != null) {
-                if (map.get(MIN_PRIORITY - 1) != null) {
-                    throw new RuntimeException();//BeforeSuit должен быть один
+            if (method.isAnnotationPresent(BeforeSuite.class)) {
+                if (beforeSuit==null) {
+                    beforeSuit=method;
                 } else {//если уже есть метод с таким приоритетом, добавляю в List метод
-                    List<Method> list = new ArrayList<>();
-                    list.add(method);
-                    map.put(MIN_PRIORITY - 1, list);
+                    throw new IllegalStateException("Method BeforeSuite duplicated");
                 }
             }
-            if (method.getAnnotation(AfterSuite.class) != null) {
-                if (map.get(MAX_PRIORITY + 1) != null) {
-                    throw new RuntimeException();//AfterSuit должен быть один
-                } else {
-                    List<Method> list = new ArrayList<>();
-                    list.add(method);
-                    map.put(MAX_PRIORITY + 1, list);
+            if (method.isAnnotationPresent(AfterSuite.class)) {
+                if (afterSuite==null) {
+                    afterSuite=method;
+                } else {//если уже есть метод с таким приоритетом, добавляю в List метод
+                    throw new IllegalStateException("Method AfterSuite duplicated");//BeforeSuit должен быть один
                 }
             }
-            if (method.getAnnotation(Test.class) != null) {
+            if (method.isAnnotationPresent(Test.class)) {
                 Test test = method.getAnnotation(Test.class);
-                if (map.get(test.priority()) != null) {
-                    map.get(test.priority()).add(method);
-                } else {
-                    List<Method> list = new ArrayList<>();
-                    list.add(method);
-                    map.put(test.priority(), list);
-                }
+                map.add(method);
+
             }
         }
 
         System.out.println("Коллекция методов класса " + className.getSimpleName() + ":");
-        for (Integer key : map.keySet()) {
-            for (Method nt : map.get(key)) {
-                System.out.println("Приоритет:" + key + " " + nt.getName());
-            }
+        for (Method mth : map) {
+            System.out.println("Приоритет: " + mth.getName());
         }
+        map.sort(Comparator.comparingInt(method ->method.getAnnotation(Test.class).priority()));
+
         System.out.println("\nВыполняю методы из класса " + className.getSimpleName() + ":");
 
         try {
-            Object testClass = new TestClass();
-            List<Method> list = new ArrayList<>();
-            for (Integer key : map.keySet()) {
-                list = map.get(key);
-                for (Method nextItem : list) {
-                    nextItem.invoke(testClass);
-                }
+            Object testClass = className.newInstance();
+            if (beforeSuit!=null){
+                beforeSuit.invoke(testClass);
+            }
+            for (Method mth : map) {
+                mth.invoke(testClass);
+            }
+            if (afterSuite!=null){
+                afterSuite.invoke(testClass);
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
             e.printStackTrace();
         }
     }

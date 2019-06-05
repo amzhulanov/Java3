@@ -1,4 +1,4 @@
-package ru.geekbrains.lesson6;
+package geekbrains.lesson6;
 
 import java.io.IOException;
 import java.util.logging.*;
